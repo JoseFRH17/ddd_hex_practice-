@@ -1,6 +1,7 @@
 package com.jose.dddhexpractice.acceptance;
 
 
+import com.jose.dddhexpractice.controllers.ChampionController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,11 +14,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 
 @WebMvcTest(ChampionController.class)
-public class ChampionControllerAcceptance {
+public class ChampionControllerAcceptanceTest {
 
-    private MockMvc mockMvc;
+    private final MockMvc mockMvc;
 
-    public ChampionControllerAcceptance(MockMvc mockMvc) {
+    public ChampionControllerAcceptanceTest(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
     }
 
@@ -25,11 +26,11 @@ public class ChampionControllerAcceptance {
     @DisplayName("Get all champions on empty database should give empty array")
     public void getAllChampionsWithEmptyDatabase() throws Exception {
 
-        MvcResult mvcResult = mockMvc.perform(get("/allChampions"))
+        MvcResult mvcResult = mockMvc.perform(get("champion/all"))
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();
         String data = mvcResult.getResponse().getContentAsString();
-        assertEquals(HttpStatus.OK,status);
+        assertEquals(HttpStatus.OK.value(),status);
         assertEquals("[]",data);
     }
 }
